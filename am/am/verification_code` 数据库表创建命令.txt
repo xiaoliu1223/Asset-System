@@ -1,0 +1,9 @@
+要创建一个名为 `verification_code` 的数据库表，可以使用以下 SQL 语句：
+
+```sql
+CREATE TABLE verification_code (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    code VARCHAR(255) NOT NULL
+);
+```
+

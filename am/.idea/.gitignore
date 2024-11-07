@@ -1,0 +1,8 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Datasource local storage ignored files
+/../../../../../../../../:\2021年工作\SpringBoot 教材建设\书稿提交给出版社的材料\书稿整理后的相关材料\教材项目源代码（某公司资产管理系统）\am\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cg.test.am.mapper.SysCheckLogMapper" >
+  <resultMap id="BaseResultMap" type="com.cg.test.am.model.SysCheckLog" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="check_by" property="checkBy" jdbcType="INTEGER" />
+    <result column="check_name" property="checkName" jdbcType="VARCHAR" />
+    <result column="check_time" property="checkTime" jdbcType="BIGINT" />
+    <result column="asset_code" property="assetCode" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    scl.id, scl.check_by,scl.check_name, scl.check_time, scl.asset_code,scl.remark
+  </sql>
+  <sql id="where">
+    <where>
+      <if test="params.assetName != null and params.assetName != ''">
+        and sa.asset_name like concat('%',#{params.assetName},'%')
+      </if>
+      <if test="params.assetCode != null and params.assetCode != ''">
+        and sa.asset_code like concat('%',#{params.assetCode},'%')
+      </if>
+    </where>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_check_log scl
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sys_check_log
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cg.test.am.model.SysCheckLog" >
+    insert into sys_check_log (id, check_by,check_name, check_time,
+      asset_code,remark)
+    values (#{id,jdbcType=BIGINT}, #{checkBy,jdbcType=INTEGER},#{checkName,jdbcType=VARCHAR}, #{checkTime,jdbcType=BIGINT},
+      #{assetCode,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cg.test.am.model.SysCheckLog" >
+    insert into sys_check_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="checkBy != null" >
+        check_by,
+      </if>
+      <if test="checkName != null" >
+        check_name,
+      </if>
+      <if test="checkTime != null" >
+        check_time,
+      </if>
+      <if test="assetCode != null" >
+        asset_code,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="checkBy != null" >
+        #{checkBy,jdbcType=INTEGER},
+      </if>
+      <if test="checkName != null" >
+        #{checkName,jdbcType=VARCHAR},
+      </if>
+      <if test="checkTime != null" >
+        #{checkTime,jdbcType=BIGINT},
+      </if>
+      <if test="assetCode != null" >
+        #{assetCode,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cg.test.am.model.SysCheckLog" >
+    update sys_check_log
+    <set >
+      <if test="checkBy != null" >
+        check_by = #{checkBy,jdbcType=INTEGER},
+      </if>
+      <if test="checkName != null" >
+        check_name = #{checkName,jdbcType=VARCHAR},
+      </if>
+      <if test="checkTime != null" >
+        check_time = #{checkTime,jdbcType=BIGINT},
+      </if>
+      <if test="assetCode != null" >
+        asset_code = #{assetCode,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cg.test.am.model.SysCheckLog" >
+    update sys_check_log
+    set check_by = #{checkBy,jdbcType=INTEGER},
+      check_name = #{checkName,jdbcType=VARCHAR},
+      check_time = #{checkTime,jdbcType=BIGINT},
+      asset_code = #{assetCode,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="count" resultType="int">
+    select count(1) from sys_check_log scl <include refid="where" />
+  </select>
+
+  <select id="list" resultType="com.cg.test.am.vo.response.SysCheckLogListResp">
+    select
+    <include refid="Base_Column_List" />,
+    sa.asset_name as assetName,sa.department_id as departmentId,sa.asset_type as assetType,
+    sd.name as departmentName,sat.name assetTypeName
+    from sys_check_log scl
+    left join sys_asset sa on sa.asset_code = scl.asset_code
+    left join sys_department sd on sd.id = sa.department_id
+    left join sys_asset_type sat on sat.id = sa.asset_type
+    <include refid="where" />
+    order by scl.id desc
+    limit #{offset}, #{limit}
+  </select>
+</mapper>

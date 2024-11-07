@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cg.test.am.mapper.SysAuditLogMapper" >
+  <resultMap id="BaseResultMap" type="com.cg.test.am.model.SysAuditLog" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="related_id" property="relatedId" jdbcType="BIGINT" />
+    <result column="audit_by" property="auditBy" jdbcType="INTEGER" />
+    <result column="audit_name" property="auditName" jdbcType="VARCHAR" />
+    <result column="audit_status" property="auditStatus" jdbcType="INTEGER" />
+    <result column="reason" property="reason" jdbcType="VARCHAR" />
+    <result column="audit_time" property="auditTime" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, type, related_id, audit_by, audit_name, audit_status, reason, audit_time
+  </sql>
+  <sql id="where">
+    <where>
+      <if test="params.assetName != null and params.assetName != ''">
+        and main.asset_name like concat('%',#{params.assetName},'%')
+      </if>
+      <if test="params.jobNo != null and params.jobNo != ''">
+        and main.job_no like concat('%',#{params.jobNo},'%')
+      </if>
+      <if test="params.departmentIds != null and params.departmentIds != ''">
+        and FIND_IN_SET(main.department_id, #{params.departmentIds})
+      </if>
+      <if test="params.userId != null and params.userId != ''">
+        and sal.audit_by = #{params.userId}
+      </if>
+      <if test="params.type != null and params.type != ''">
+        and sal.type = #{params.type}
+      </if>
+    </where>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_audit_log
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sys_audit_log
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cg.test.am.model.SysAuditLog" >
+    insert into sys_audit_log (id, type, related_id, 
+      audit_by, audit_name, audit_status, reason,
+      audit_time)
+    values (#{id,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, #{relatedId,jdbcType=BIGINT}, 
+      #{auditBy,jdbcType=INTEGER}, #{auditName, jdbcType=VARCHAR}, #{auditStatus,jdbcType=INTEGER}, #{reason,jdbcType=VARCHAR},
+      #{auditTime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cg.test.am.model.SysAuditLog" >
+    insert into sys_audit_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="relatedId != null" >
+        related_id,
+      </if>
+      <if test="auditBy != null" >
+        audit_by,
+      </if>
+      <if test="auditName != null" >
+        audit_name,
+      </if>
+      <if test="auditStatus != null" >
+        audit_status,
+      </if>
+      <if test="reason != null" >
+        reason,
+      </if>
+      <if test="auditTime != null" >
+        audit_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="relatedId != null" >
+        #{relatedId,jdbcType=BIGINT},
+      </if>
+      <if test="auditBy != null" >
+        #{auditBy,jdbcType=INTEGER},
+      </if>
+      <if test="auditName != null" >
+        #{auditName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatus != null" >
+        #{auditStatus,jdbcType=INTEGER},
+      </if>
+      <if test="reason != null" >
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        #{auditTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cg.test.am.model.SysAuditLog" >
+    update sys_audit_log
+    <set >
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="relatedId != null" >
+        related_id = #{relatedId,jdbcType=BIGINT},
+      </if>
+      <if test="auditBy != null" >
+        audit_by = #{auditBy,jdbcType=INTEGER},
+      </if>
+      <if test="auditName != null" >
+        audit_name = #{auditName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatus != null" >
+        audit_status = #{auditStatus,jdbcType=INTEGER},
+      </if>
+      <if test="reason != null" >
+        reason = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        audit_time = #{auditTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cg.test.am.model.SysAuditLog" >
+    update sys_audit_log
+    set type = #{type,jdbcType=INTEGER},
+      related_id = #{relatedId,jdbcType=BIGINT},
+      audit_by = #{auditBy,jdbcType=INTEGER},
+      audit_name = #{auditName,jdbcType=VARCHAR},
+      audit_status = #{auditStatus,jdbcType=INTEGER},
+      reason = #{reason,jdbcType=VARCHAR},
+      audit_time = #{auditTime,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="count" resultType="int">
+    select
+    count(1) from sys_audit_log sal
+    <if test="params.type == 1" >
+      left join sys_application_record main on main.id = sal.related_id
+    </if>
+    <if test="params.type == 3" >
+      left join sys_receive_record main on main.id = sal.related_id
+    </if>
+    <if test="params.type == 4" >
+      left join sys_return_record main on main.id = sal.related_id
+    </if>
+    <if test="params.type == 5" >
+      left join sys_charge_off_record main on main.id = sal.related_id
+    </if>
+    <include refid="where" />
+  </select>
+
+  <select id="list" resultType="com.cg.test.am.vo.response.SysAuditLogAuditListResp">
+    select
+    sal.audit_name as auditName,sal.audit_status as auditStatus,sal.reason,sal.audit_time as auditTime,
+    sd.name as departmentName,sat.name assetTypeName,
+    main.job_no as jobNo,main.username,main.asset_name as assetName,main.num,main.units,main.description,main.specification,main.department_id as departmentId,main.asset_type as assetType
+    from sys_audit_log sal
+    <if test="params.type == 1" >
+    left join sys_application_record main on main.id = sal.related_id
+    </if>
+    <if test="params.type == 3" >
+      left join sys_receive_record main on main.id = sal.related_id
+    </if>
+    <if test="params.type == 4" >
+      left join sys_return_record main on main.id = sal.related_id
+    </if>
+    <if test="params.type == 5" >
+      left join sys_charge_off_record main on main.id = sal.related_id
+    </if>
+    left join sys_department sd on sd.id = main.department_id
+    left join sys_asset_type sat on sat.id = main.asset_type
+    <include refid="where" />
+    order by sal.id desc
+    limit #{offset}, #{limit}
+  </select>
+</mapper>

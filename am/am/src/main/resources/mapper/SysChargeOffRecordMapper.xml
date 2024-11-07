@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cg.test.am.mapper.SysChargeOffRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.cg.test.am.model.SysChargeOffRecord" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="job_no" property="jobNo" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="department_id" property="departmentId" jdbcType="INTEGER" />
+    <result column="asset_name" property="assetName" jdbcType="VARCHAR" />
+    <result column="asset_type" property="assetType" jdbcType="INTEGER" />
+    <result column="asset_code" property="assetCode" jdbcType="VARCHAR" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="units" property="units" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="flow_path" property="flowPath" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+    <result column="specification" property="specification" jdbcType="VARCHAR" />
+    <result column="pin_amount" property="pinAmount" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, job_no, user_id, username, department_id, asset_name, asset_type, asset_code, 
+    num, units, description, flow_path, status, create_time, update_time,specification,pin_amount
+  </sql>
+  <sql id="where">
+    <where>
+      <if test="params.assetName != null and params.assetName != ''">
+        and scor.asset_name like concat('%',#{params.assetName},'%')
+      </if>
+      <if test="params.jobNo != null and params.jobNo != ''">
+        and scor.job_no like concat('%',#{params.jobNo},'%')
+      </if>
+      <if test="params.assetCode != null and params.assetCode != ''">
+        and scor.asset_code like concat('%',#{params.assetCode},'%')
+      </if>
+      <if test="params.status != null">
+        and scor.status = #{params.status}
+      </if>
+      <if test="params.departmentIds != null and params.departmentIds != ''">
+        and FIND_IN_SET(scor.department_id, #{params.departmentIds})
+      </if>
+    </where>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_charge_off_record
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sys_charge_off_record
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cg.test.am.model.SysChargeOffRecord" >
+    insert into sys_charge_off_record (id, job_no, user_id, 
+      username, department_id, asset_name, 
+      asset_type, asset_code, num, units,
+      description, flow_path, status, 
+      create_time, update_time,specification,pin_amount)
+    values (#{id,jdbcType=BIGINT}, #{jobNo,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
+      #{username,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER}, #{assetName,jdbcType=VARCHAR}, 
+      #{assetType,jdbcType=INTEGER}, #{assetCode,jdbcType=VARCHAR}, #{num,jdbcType=INTEGER}, #{units,jdbcType=VARCHAR},
+      #{description,jdbcType=VARCHAR}, #{flowPath,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}, #{specification,jdbcType=VARCHAR}, #{pinAmount,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cg.test.am.model.SysChargeOffRecord" useGeneratedKeys="true" keyProperty="id" >
+    insert into sys_charge_off_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="jobNo != null" >
+        job_no,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="departmentId != null" >
+        department_id,
+      </if>
+      <if test="assetName != null" >
+        asset_name,
+      </if>
+      <if test="assetType != null" >
+        asset_type,
+      </if>
+      <if test="assetCode != null" >
+        asset_code,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="units != null" >
+        units,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="flowPath != null" >
+        flow_path,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="specification != null" >
+        specification,
+      </if>
+      <if test="pinAmount != null" >
+        pin_amount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="jobNo != null" >
+        #{jobNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null" >
+        #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="assetName != null" >
+        #{assetName,jdbcType=VARCHAR},
+      </if>
+      <if test="assetType != null" >
+        #{assetType,jdbcType=INTEGER},
+      </if>
+      <if test="assetCode != null" >
+        #{assetCode,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="units != null" >
+        #{units,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="flowPath != null" >
+        #{flowPath,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="specification != null" >
+        #{specification,jdbcType=VARCHAR},
+      </if>
+      <if test="pinAmount != null" >
+        #{pinAmount,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cg.test.am.model.SysChargeOffRecord" >
+    update sys_charge_off_record
+    <set >
+      <if test="jobNo != null" >
+        job_no = #{jobNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null" >
+        department_id = #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="assetName != null" >
+        asset_name = #{assetName,jdbcType=VARCHAR},
+      </if>
+      <if test="assetType != null" >
+        asset_type = #{assetType,jdbcType=INTEGER},
+      </if>
+      <if test="assetCode != null" >
+        asset_code = #{assetCode,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="units != null" >
+        units = #{units,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="flowPath != null" >
+        flow_path = #{flowPath,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="specification != null" >
+        specification = #{specification,jdbcType=VARCHAR},
+      </if>
+      <if test="pinAmount != null" >
+        pin_amount = #{pinAmount,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cg.test.am.model.SysChargeOffRecord" >
+    update sys_charge_off_record
+    set job_no = #{jobNo,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      username = #{username,jdbcType=VARCHAR},
+      department_id = #{departmentId,jdbcType=INTEGER},
+      asset_name = #{assetName,jdbcType=VARCHAR},
+      asset_type = #{assetType,jdbcType=INTEGER},
+      asset_code = #{assetCode,jdbcType=VARCHAR},
+      num = #{num,jdbcType=INTEGER},
+      units = #{units,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      flow_path = #{flowPath,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT},
+      specification = #{specification,jdbcType=VARCHAR},
+      pin_amount = #{pinAmount,jdbcType=DECIMAL},
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="count" resultType="int">
+    select count(1) from sys_charge_off_record scor <include refid="where" />
+  </select>
+
+  <select id="list" resultType="com.cg.test.am.vo.response.SysChargeOffRecordResp">
+    select scor.*,sd.name as departmentName,sat.name assetTypeName  from sys_charge_off_record scor
+    left join sys_department sd on sd.id = scor.department_id
+    left join sys_asset_type sat on sat.id = scor.asset_type
+    <include refid="where" />
+    order by scor.id desc
+    limit #{offset}, #{limit}
+  </select>
+
+  <select id="auditCount" resultType="int">
+    select count(1)
+    <if test="params.status == 0" >
+      from sys_charge_off_record scor where scor.flow_path = #{params.userId}
+    </if>
+    <if test="params.status != 0" >
+      from sys_audit_log sal
+      left join  sys_charge_off_record scor on scor.id = sal.related_id
+      where  sal.audit_by = #{params.userId}
+      and sal.type = 5 and sal.id is not null
+      <if test="params.auditResult != null and params.auditResult != ''and params.auditResult != 0">
+        and sal.audit_status = #{params.auditResult}
+      </if>
+    </if>
+  </select>
+
+  <select id="auditList" resultType="com.cg.test.am.vo.response.SysChargeOffRecordResp">
+    select
+    scor.id,scor.job_no,scor.user_id,scor.username,scor.department_id,scor.asset_name,scor.asset_type,scor.asset_code,scor.num,scor.units,
+    scor.description,scor.flow_path,scor.create_time,scor.update_time,scor.specification,scor.pin_amount,
+    sd.name as departmentName,sat.name assetTypeName
+    <if test="params.status == 0" >
+      ,scor.status
+      from sys_charge_off_record scor
+    </if>
+
+    <if test="params.status != 0" >
+      ,sal.audit_status status,sal.reason reason
+      from sys_audit_log sal
+      left join  sys_charge_off_record scor on scor.id = sal.related_id
+    </if>
+    left join sys_department sd on sd.id = scor.department_id
+    left join sys_asset_type sat on sat.id = scor.asset_type
+    <if test="params.status == 0" >
+      where  scor.flow_path = #{params.userId}
+    </if>
+
+    <if test="params.status != 0" >
+      where  sal.audit_by = #{params.userId}
+      and sal.type = 5 and sal.id is not null
+      <if test="params.auditResult != null and params.auditResult != ''and params.auditResult != 0">
+        and sal.audit_status = #{params.auditResult}
+      </if>
+    </if>
+    <if test="params.status == 0" >
+      order by scor.id desc
+    </if>
+    <if test="params.status != 0" >
+      order by sal.id desc
+    </if>
+    limit #{offset}, #{limit}
+  </select>
+
+  <select id="getById" resultType="com.cg.test.am.vo.response.SysChargeOffRecordResp">
+    select scor.*,sd.name as departmentName,sat.name assetTypeName  from sys_charge_off_record scor
+    left join sys_department sd on sd.id = scor.department_id
+    left join sys_asset_type sat on sat.id = scor.asset_type
+    where scor.id = #{id}
+  </select>
+</mapper>

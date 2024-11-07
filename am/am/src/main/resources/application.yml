@@ -1,0 +1,52 @@
+server:
+  port: 8097  #运行端口号
+  #tomcat属性配置
+  tomcat:
+    uri-encoding: UTF-8
+    max-connections: 10000   #接受和处理的最大连接数
+    acceptCount: 10000         #可以放到处理队列中的请求数
+    threads:
+      max: 1000    #最大并发数
+      min-spare: 500  #初始化时创建的线程数
+
+# 数据库连接属性配置
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/am?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: 123456789
+    hikari:
+      max-lifetime: 60000
+      maximum-pool-size: 20
+      connection-timeout: 60000
+      idle-timeout: 60000
+      validation-timeout: 3000
+      login-timeout: 5
+      minimum-idle: 10
+  messages:
+    basename: il8n/i18n_messages
+    encoding: UTF-8
+
+
+
+chor:
+  fileSystem: /usr/lcoal
+
+#  main:
+#    allow-bean-definition-overriding: true
+knife4j:
+  enable: true
+  production: false
+  basic:
+    password: 123456
+    username: cg
+    enable: true
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath*:mapper/*.xml
+  type-aliases-package: com.cg.test.model
+
+

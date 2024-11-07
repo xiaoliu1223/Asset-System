@@ -1,0 +1,69 @@
+@import '../../common/list.less';
+.analysis{
+    width: 100%;
+    display: flex;
+}
+.analysis_item{
+    width: 100%;
+    flex: 1;
+    margin-bottom: 60px;
+    //display: flex;
+    flex-direction: column;
+    justify-content: center;
+    img{
+        width: 800px;
+    }
+}
+.monthpicker{
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333333;
+    span{
+        font-size: 16px;
+    }
+}
+.analysis_item_last{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    img{
+        width: 70%;
+        height: 380px;
+    }
+}
+
+/* component/table/table.wxss */
+.table{
+    width: 100%;
+    padding: 20px 80px;
+    box-sizing: border-box;
+}
+.table_title{
+    width: 100%;
+    display: flex;
+    font-size: 24rpx;
+    min-height: 75rpx;
+    border: 1px solid #e9ebff;
+    border-bottom: none;
+    border-radius: 10rpx 10rpx 0 0;
+}
+.table_title:nth-last-of-type(1){
+    border-bottom: 1px solid #e9ebff;
+}
+.table_title_item{
+    // height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    flex:1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid #e9ebff;
+   
+}
+.table_title_item:nth-last-of-type(1){
+    border-right: none;
+}

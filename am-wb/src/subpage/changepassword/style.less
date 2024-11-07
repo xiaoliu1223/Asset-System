@@ -1,0 +1,61 @@
+.change-password{
+    width: 700px;
+    margin: 0 auto;
+}
+
+.inner {
+  flex: 1;
+  height: 700px;
+  padding: 156px 250px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0px 0px 10px 5px #f0f0f0;
+  margin-top: 45px;
+  .step {
+    margin: 60px auto 0;
+    width: 650px;
+    position: relative;
+    text-align: center;
+    .imgspan {
+      display: block;
+      margin: 0 auto 30px;
+      font-size: 30px;
+      color: #333333;
+    }
+    .error {
+      line-height: 60px;
+      width: 230px;
+      text-align: left;
+      position: absolute;
+      top: 0;
+      right: -250px;
+      font-size: 20px;
+      color: #ff0000;
+    }
+    .boxheight {
+      height: 60px;
+      width: 650px;
+      border-radius: 6px;
+      font-size: 26px;
+      margin-bottom: 54px;
+    }
+  }
+}
+:global {
+  .ant-steps-item-icon {
+    width: 70px;
+    height: 70px;
+    font-size: 40px;
+    border-radius: 100%;
+    .ant-steps-icon {
+      top: 12px;
+    }
+  }
+  .ant-steps-item-title {
+    line-height: 70px;
+    font-size: 30px;
+    &:after {
+      top: 35px;
+    }
+  }
+}

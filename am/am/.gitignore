@@ -1,0 +1,13 @@
+# Created by .ignore support plugin (hsz.mobi)
+!.gitignore
+.idea
+.mvn
+target
+*.imlgit
+/.project
+/.settings
+/assets-manager/.project
+/assets-manager/.settings/org.eclipse.m2e.core.prefs
+/assets-manager/lottery-client.iml
+*.iml
+/*.iml

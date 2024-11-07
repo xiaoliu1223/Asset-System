@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cg.test.am.mapper.SysPurchaseRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.cg.test.am.model.SysPurchaseRecord" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="asset_code" property="assetCode" jdbcType="VARCHAR" />
+    <result column="job_no" property="jobNo" jdbcType="VARCHAR" />
+    <result column="buyer" property="buyer" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="department_id" property="departmentId" jdbcType="INTEGER" />
+    <result column="asset_name" property="assetName" jdbcType="VARCHAR" />
+    <result column="actual_asset_name" property="actualAssetName" jdbcType="VARCHAR" />
+    <result column="asset_type" property="assetType" jdbcType="INTEGER" />
+    <result column="actual_asset_type" property="actualAssetType" jdbcType="VARCHAR" />
+    <result column="budget_num" property="budgetNum" jdbcType="INTEGER" />
+    <result column="budget_price" property="budgetPrice" jdbcType="DECIMAL" />
+    <result column="actual_num" property="actualNum" jdbcType="INTEGER" />
+    <result column="actual_price" property="actualPrice" jdbcType="DECIMAL" />
+    <result column="units" property="units" jdbcType="VARCHAR" />
+    <result column="actual_units" property="actualUnits" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="purchase_status" property="purchaseStatus" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+    <result column="specification" property="specification" jdbcType="VARCHAR" />
+    <result column="buyer_name" property="buyerName" jdbcType="VARCHAR" />
+    <result column="actual_total_mount" property="actualTotalMount" jdbcType="DECIMAL" />
+    <result column="buy_description" property="buyDescription" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, job_no, buyer, user_id, username, department_id, asset_name, asset_type, budget_num, 
+    budget_price, actual_num, actual_price, units, actual_units, description, purchase_status,
+    create_time, update_time,specification,buyer_name,actual_total_mount,buy_description,actual_asset_name,actual_asset_type
+  </sql>
+  <sql id="where">
+    <where>
+      <if test="params.assetName != null and params.assetName != ''">
+        and sar.asset_name like concat('%',#{params.assetName},'%')
+      </if>
+      <if test="params.assetType != null and params.assetType != ''">
+        and sar.asset_type = #{params.assetType}
+      </if>
+      <if test="params.jobNo != null and params.jobNo != ''">
+        and sar.job_no like concat('%',#{params.jobNo},'%')
+      </if>
+      <if test="params.purchaseStatus != null">
+        and sar.purchase_status = #{params.purchaseStatus}
+      </if>
+      <if test="params.username != null and params.username != ''">
+        and sar.username like concat('%',#{params.username},'%')
+      </if>
+      <if test="params.buyerName != null and params.buyerName != ''">
+        and sar.buyer_name like concat('%',#{params.buyerName},'%')
+      </if>
+      <if test="params.departmentIds != null and params.departmentIds != ''">
+        and FIND_IN_SET(sar.department_id, #{params.departmentIds})
+      </if>
+    </where>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_purchase_record
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sys_purchase_record
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cg.test.am.model.SysPurchaseRecord" >
+    insert into sys_purchase_record (id,asset_code, job_no, buyer,
+      user_id, username, department_id, 
+      asset_name, asset_type,actual_asset_name,actual_asset_type, budget_num,
+      budget_price, actual_num, actual_price, units, actual_units,
+      description,
+      purchase_status, create_time, update_time,specification,buyer_name,actual_total_mount,buy_description
+      )
+    values (#{id,jdbcType=BIGINT}, #{assetCode,jdbcType=VARCHAR}, #{jobNo,jdbcType=VARCHAR}, #{buyer,jdbcType=INTEGER},
+      #{userId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER}, 
+      #{assetName,jdbcType=VARCHAR}, #{actualAssetType,jdbcType=BIGINT},
+      #{actualAssetName,jdbcType=VARCHAR}, #{assetType,jdbcType=BIGINT}, #{budgetNum,jdbcType=INTEGER},
+      #{budgetPrice,jdbcType=DECIMAL}, #{actualNum,jdbcType=INTEGER}, #{actualPrice,jdbcType=DECIMAL}, #{units,jdbcType=VARCHAR}, #{actualUnits,jdbcType=VARCHAR},
+      #{description,jdbcType=VARCHAR},
+      #{purchaseStatus,jdbcType=INTEGER}, #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}, #{specification,jdbcType=VARCHAR}, #{buyerName,jdbcType=VARCHAR},
+      #{actualTotalMount,jdbcType=DECIMAL}, #{buyDescription,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cg.test.am.model.SysPurchaseRecord" useGeneratedKeys="true" keyProperty="id" >
+    insert into sys_purchase_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="assetCode != null" >
+        asset_code,
+      </if>
+      <if test="jobNo != null" >
+        job_no,
+      </if>
+      <if test="buyer != null" >
+        buyer,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="departmentId != null" >
+        department_id,
+      </if>
+      <if test="assetName != null" >
+        asset_name,
+      </if>
+      <if test="assetType != null" >
+        asset_type,
+      </if>
+      <if test="actualAssetName != null" >
+        actual_asset_name,
+      </if>
+      <if test="actualAssetType != null" >
+        actual_asset_type,
+      </if>
+      <if test="budgetNum != null" >
+        budget_num,
+      </if>
+      <if test="budgetPrice != null" >
+        budget_price,
+      </if>
+      <if test="actualNum != null" >
+        actual_num,
+      </if>
+      <if test="actualPrice != null" >
+        actual_price,
+      </if>
+      <if test="units != null" >
+        units,
+      </if>
+      <if test="actualUnits != null" >
+        actual_units,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="purchaseStatus != null" >
+        purchase_status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="specification != null" >
+        specification,
+      </if>
+      <if test="buyerName != null" >
+        buyer_name,
+      </if>
+      <if test="actualTotalMount != null" >
+        actual_total_mount,
+      </if>
+      <if test="buyDescription != null" >
+        buy_description,
+      </if>
+    </trim>
+
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="assetCode != null" >
+        #{assetCode,jdbcType=VARCHAR},
+      </if>
+      <if test="jobNo != null" >
+        #{jobNo,jdbcType=VARCHAR},
+      </if>
+      <if test="buyer != null" >
+        #{buyer,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null" >
+        #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="assetName != null" >
+        #{assetName,jdbcType=VARCHAR},
+      </if>
+      <if test="assetType != null" >
+        #{assetType,jdbcType=BIGINT},
+      </if>
+      <if test="actualAssetName != null" >
+        #{actualAssetName,jdbcType=VARCHAR},
+      </if>
+      <if test="actualAssetType != null" >
+        #{actualAssetType,jdbcType=BIGINT},
+      </if>
+      <if test="budgetNum != null" >
+        #{budgetNum,jdbcType=INTEGER},
+      </if>
+      <if test="budgetPrice != null" >
+        #{budgetPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="actualNum != null" >
+        #{actualNum,jdbcType=INTEGER},
+      </if>
+      <if test="actualPrice != null" >
+        #{actualPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="units != null" >
+        #{units,jdbcType=VARCHAR},
+      </if>
+      <if test="actualUnits != null" >
+        #{actualUnits,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseStatus != null" >
+        #{purchaseStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="specification != null" >
+        #{specification,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerName != null" >
+        #{buyerName,jdbcType=VARCHAR}
+      </if>
+      <if test="actualTotalMount != null" >
+        #{actualTotalMount,jdbcType=DECIMAL}
+      </if>
+      <if test="buyDescription != null" >
+        #{buyDescription,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.cg.test.am.model.SysPurchaseRecord" >
+    update sys_purchase_record
+    <set >
+      <if test="assetCode != null" >
+        asset_code = #{assetCode,jdbcType=VARCHAR},
+      </if>
+      <if test="jobNo != null" >
+        job_no = #{jobNo,jdbcType=VARCHAR},
+      </if>
+      <if test="buyer != null" >
+        buyer = #{buyer,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null" >
+        department_id = #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="assetName != null" >
+        asset_name = #{assetName,jdbcType=VARCHAR},
+      </if>
+      <if test="assetType != null" >
+        asset_type = #{assetType,jdbcType=BIGINT},
+      </if>
+      <if test="actualAssetName != null" >
+        actual_asset_name = #{actualAssetName,jdbcType=VARCHAR},
+      </if>
+      <if test="actualAssetType != null" >
+        actual_asset_type = #{actualAssetType,jdbcType=BIGINT},
+      </if>
+      <if test="budgetNum != null" >
+        budget_num = #{budgetNum,jdbcType=INTEGER},
+      </if>
+      <if test="budgetPrice != null" >
+        budget_price = #{budgetPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="actualNum != null" >
+        actual_num = #{actualNum,jdbcType=INTEGER},
+      </if>
+      <if test="actualPrice != null" >
+        actual_price = #{actualPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="units != null" >
+        units = #{units,jdbcType=VARCHAR},
+      </if>
+      <if test="actualUnits != null" >
+        actual_units = #{actualUnits,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseStatus != null" >
+        purchase_status = #{purchaseStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="specification != null" >
+        specification = #{specification,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerName != null" >
+        buyer_name = #{buyerName,jdbcType=VARCHAR},
+      </if>
+      <if test="actualTotalMount != null" >
+        actual_total_mount = #{actualTotalMount,jdbcType=DECIMAL},
+      </if>
+      <if test="buyDescription != null" >
+        buy_description = #{buyDescription,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.cg.test.am.model.SysPurchaseRecord" >
+    update sys_purchase_record
+    set asset_code = #{assetCode,jdbcType=VARCHAR},
+      job_no = #{jobNo,jdbcType=VARCHAR},
+      buyer = #{buyer,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      username = #{username,jdbcType=VARCHAR},
+      department_id = #{departmentId,jdbcType=INTEGER},
+      asset_name = #{assetName,jdbcType=VARCHAR},
+      asset_type = #{assetType,jdbcType=INTEGER},
+      actual_asset_name = #{actualAssetName,jdbcType=VARCHAR},
+      actual_asset_type = #{actualAssetType,jdbcType=BIGINT},
+      budget_num = #{budgetNum,jdbcType=INTEGER},
+      budget_price = #{budgetPrice,jdbcType=DECIMAL},
+      actual_num = #{actualNum,jdbcType=INTEGER},
+      actual_price = #{actualPrice,jdbcType=DECIMAL},
+      units = #{units,jdbcType=VARCHAR},
+      actual_units = #{actualUnits,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      purchase_status = #{purchaseStatus,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT},
+      specification = #{specification,jdbcType=VARCHAR},
+      buyer_name = #{buyerName,jdbcType=VARCHAR},
+      actual_total_mount = #{actualTotalMount,jdbcType=DECIMAL},
+      buy_description = #{buyDescription,jdbcType=VARCHAR},
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="count" resultType="int">
+    select count(1) from sys_purchase_record sar <include refid="where" />
+  </select>
+
+  <select id="list" resultType="com.cg.test.am.vo.response.SysPurchaseRecordListResp">
+    select sar.*,sd.name as departmentName,sat.name assetTypeName,sar.budget_num*sar.budget_price as totalAmount from sys_purchase_record sar
+    left join sys_department sd on sd.id = sar.department_id
+    left join sys_asset_type sat on sat.id = sar.asset_type
+    <include refid="where" />
+    order by r.purchase_status,sar.id desc
+    limit #{offset}, #{limit}
+  </select>
+    <select id="sts" resultType="com.cg.test.am.vo.response.SysAssetPurchaseAnalysisResp">
+      select sum(actual_num) as purchaseNum, sum(actual_num * actual_price) as amount
+      from sys_purchase_record
+      where 1 = 1
+      <if test="params.ids != null">
+        and asset_type in
+        <foreach collection="params.ids" index="index" item="id" open="(" separator="," close=")">
+          #{id}
+        </foreach>
+      </if>
+      <if test="params.startTime != null and params.endTime !=null">
+        and create_time between #{params.startTime} and #{params.endTime}
+      </if>
+
+    </select>
+</mapper>

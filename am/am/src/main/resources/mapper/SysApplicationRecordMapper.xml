@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cg.test.am.mapper.SysApplicationRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.cg.test.am.model.SysApplicationRecord" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="job_no" property="jobNo" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="department_id" property="departmentId" jdbcType="INTEGER" />
+    <result column="asset_name" property="assetName" jdbcType="VARCHAR" />
+    <result column="asset_type" property="assetType" jdbcType="INTEGER" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="budget_price" property="budgetPrice" jdbcType="DECIMAL" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="flow_path" property="flowPath" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+    <result column="units" property="units" jdbcType="VARCHAR" />
+    <result column="specification" property="specification" jdbcType="VARCHAR" />
+
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, job_no, user_id, username, department_id, asset_name, asset_type, num, budget_price, 
+    description, flow_path, status, create_time, update_time, units, specification
+  </sql>
+  <sql id="where">
+    <where>
+      <if test="params.assetName != null and params.assetName != ''">
+        and sar.asset_name like concat('%',#{params.assetName},'%')
+      </if>
+      <if test="params.assetType != null and params.assetType != ''">
+        and sar.asset_type = #{params.assetType}
+      </if>
+      <if test="params.jobNo != null and params.jobNo != ''">
+        and sar.job_no like concat('%',#{params.jobNo},'%')
+      </if>
+      <if test="params.status != null">
+        and sar.status = #{params.status}
+      </if>
+      <if test="params.username != null and params.username != ''">
+        and sar.username like concat('%',#{params.username},'%')
+      </if>
+      <if test="params.departmentIds != null and params.departmentIds != ''">
+        and FIND_IN_SET(sar.department_id, #{params.departmentIds})
+      </if>
+    </where>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select  *  from sys_application_record
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sys_application_record
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cg.test.am.model.SysApplicationRecord" >
+    insert into sys_application_record (id, job_no, user_id, 
+      username, department_id, asset_name, 
+      asset_type, num, budget_price, 
+      description, flow_path, status, 
+      create_time, update_time, units, specification)
+    values (#{id,jdbcType=BIGINT}, #{jobNo,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
+      #{username,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER}, #{assetName,jdbcType=VARCHAR}, 
+      #{assetType,jdbcType=INTEGER}, #{num,jdbcType=INTEGER}, #{budgetPrice,jdbcType=DECIMAL}, 
+      #{description,jdbcType=VARCHAR}, #{flowPath,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}, #{units,jdbcType=VARCHAR}, #{specification,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cg.test.am.model.SysApplicationRecord" useGeneratedKeys="true" keyProperty="id" >
+    insert into sys_application_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="jobNo != null" >
+        job_no,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="departmentId != null" >
+        department_id,
+      </if>
+      <if test="assetName != null" >
+        asset_name,
+      </if>
+      <if test="assetType != null" >
+        asset_type,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="budgetPrice != null" >
+        budget_price,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="flowPath != null" >
+        flow_path,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="units != null" >
+        units,
+      </if>
+      <if test="specification != null" >
+        specification,
+      </if>
+      <if test="relateJobNo != null" >
+        relate_job_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="jobNo != null" >
+        #{jobNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null" >
+        #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="assetName != null" >
+        #{assetName,jdbcType=VARCHAR},
+      </if>
+      <if test="assetType != null" >
+        #{assetType,jdbcType=INTEGER},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="budgetPrice != null" >
+        #{budgetPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="flowPath != null" >
+        #{flowPath,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="units != null" >
+        #{units,jdbcType=VARCHAR},
+      </if>
+      <if test="specification != null" >
+        #{specification,jdbcType=VARCHAR},
+      </if>
+      <if test="relateJobNo != null" >
+        #{relateJobNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cg.test.am.model.SysApplicationRecord" >
+    update sys_application_record
+    <set >
+      <if test="jobNo != null" >
+        job_no = #{jobNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null" >
+        department_id = #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="assetName != null" >
+        asset_name = #{assetName,jdbcType=VARCHAR},
+      </if>
+      <if test="assetType != null" >
+        asset_type = #{assetType,jdbcType=INTEGER},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="budgetPrice != null" >
+        budget_price = #{budgetPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="flowPath != null" >
+        flow_path = #{flowPath,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="units != null" >
+        units = #{units,jdbcType=VARCHAR},
+      </if>
+      <if test="specification != null" >
+        specification = #{specification,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="count" resultType="int">
+  select count(1) from sys_application_record sar <include refid="where" />
+</select>
+
+  <select id="list" resultType="com.cg.test.am.vo.response.SysApplicationRecordListResp">
+    select sar.*,sd.name as departmentName,sat.name assetTypeName, sat.id as assetType
+    from sys_application_record sar
+    left join sys_department sd on sd.id = sar.department_id
+    left join sys_asset_type sat on sat.id = sar.asset_type
+    <include refid="where" />
+    order by sar.id desc
+    limit #{offset}, #{limit}
+  </select>
+
+  <select id="auditCount" resultType="int">
+    select count(1)
+    <if test="params.status == 0" >
+      from sys_application_record sar where  sar.flow_path = #{params.userId}
+    </if>
+    <if test="params.status != 0" >
+      from sys_audit_log sal
+      left join  sys_application_record sar on sar.id = sal.related_id
+      where  sal.audit_by = #{params.userId}
+      and sal.type = 1 and sal.id is not null
+      <if test="params.auditResult != null and params.auditResult != ''and params.auditResult != 0">
+        and sal.audit_status = #{params.auditResult}
+      </if>
+    </if>
+  </select>
+
+  <select id="auditList" resultType="com.cg.test.am.vo.response.SysApplicationRecordListResp">
+    select
+    sar.id,sar.job_no,sar.user_id,sar.username,sar.department_id,
+    sar.asset_name,sar.asset_type,sar.num,sar.budget_price,sar.description,sar.flow_path,
+    sar.create_time,sar.update_time,sar.specification,sar.units,
+    sd.name as departmentName,sat.name assetTypeName, sat.id as assetType
+    <if test="params.status == 0" >
+      ,sar.status status
+      from sys_application_record sar
+    </if>
+
+    <if test="params.status != 0" >
+    ,sal.audit_status status,sal.reason reason
+      from sys_audit_log sal
+      left join  sys_application_record sar on sar.id = sal.related_id
+    </if>
+    left join sys_department sd on sd.id = sar.department_id
+    left join sys_asset_type sat on sat.id = sar.asset_type
+    <if test="params.status == 0" >
+      where  sar.flow_path = #{params.userId}
+    </if>
+
+    <if test="params.status != 0" >
+      where  sal.audit_by = #{params.userId}
+      and sal.type = 1 and sal.id is not null
+      <if test="params.auditResult != null and params.auditResult != ''and params.auditResult != 0">
+        and sal.audit_status = #{params.auditResult}
+      </if>
+    </if>
+    <if test="params.status == 0" >
+      order by sar.id desc
+    </if>
+    <if test="params.status != 0" >
+      order by sal.id desc
+    </if>
+    limit #{offset}, #{limit}
+  </select>
+    <select id="getById" resultType="com.cg.test.am.vo.response.SysApplicationRecordResp">
+    select
+    sar.id,sar.job_no,sar.user_id,sar.username,sar.department_id,
+    sar.asset_name,sar.asset_type,sar.num,sar.budget_price,sar.description,sar.flow_path,
+    sar.create_time,sar.update_time,sar.specification,sar.units,sar.status,
+    sd.name as departmentName,sat.name assetTypeName, sat.id as assetType,sar.relate_job_no
+    from sys_application_record sar
+    left join sys_department sd on sd.id = sar.department_id
+    left join sys_asset_type sat on sat.id = sar.asset_type
+    where sar.id = #{id}
+    </select>
+
+  <select id="getByRelateJobNo" resultType="com.cg.test.am.vo.response.SysApplicationRecordResp">
+    select
+    sar.id,sar.job_no,sar.user_id,sar.username,sar.department_id,
+    sar.asset_name,sar.asset_type,sar.num,sar.budget_price,sar.description,sar.flow_path,
+    sar.create_time,sar.update_time,sar.specification,sar.units,sar.status,
+    sd.name as departmentName,sat.name assetTypeName, sat.id as assetType,sar.relate_job_no
+    from sys_application_record sar
+    left join sys_department sd on sd.id = sar.department_id
+    left join sys_asset_type sat on sat.id = sar.asset_type
+    where sar.relate_job_no = #{relateJobNo}
+  </select>
+
+  <select id="getPage" resultType="com.cg.test.am.vo.response.SysApplicationRecordListResp">
+    select
+    sar.id,sar.job_no,sar.user_id,sar.username,sar.department_id,
+    sar.asset_name,sar.asset_type,sar.num,sar.budget_price,sar.description,sar.flow_path,
+    sar.create_time,sar.update_time,sar.specification,sar.units,
+    sd.name as departmentName,sat.name assetTypeName, sat.id as assetType,sar.relate_job_no
+    <if test="params.status == 0" >
+      ,sar.status status
+      from sys_application_record sar
+    </if>
+
+    <if test="params.status != 0" >
+      ,sal.audit_status status,sal.reason reason
+      from sys_audit_log sal
+      left join  sys_application_record sar on sar.id = sal.related_id
+    </if>
+    left join sys_department sd on sd.id = sar.department_id
+    left join sys_asset_type sat on sat.id = sar.asset_type
+    where 1=1
+    <if test="params.status == 0" >
+
+       <if test="params.userId == 20">
+         and sar.flow_path in (20, 37)
+       </if>
+       <if test="params.userId != 20">
+         and sar.flow_path = #{params.userId}
+       </if>
+
+      <if test="params.batchSingle == 1" >
+        and (relate_job_no is null or job_no=relate_job_no)
+      </if>
+
+    </if>
+    <if test="params.status != 0" >
+      and  sal.audit_by = #{params.userId}
+      and sal.type = 1 and sal.id is not null
+      <if test="params.auditResult != null and params.auditResult != ''and params.auditResult != 0">
+        and sal.audit_status = #{params.auditResult}
+      </if>
+    </if>
+
+    <if test="params.status == 0" >
+      order by sar.id desc
+    </if>
+    <if test="params.status != 0" >
+      order by sal.id desc
+    </if>
+  </select>
+</mapper>
